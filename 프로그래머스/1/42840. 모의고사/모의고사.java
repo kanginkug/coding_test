@@ -1,28 +1,26 @@
 import java.util.*;
 class Solution {
-    public static int[] solution(int[] answers) {
-        int[][] patterns = {
-                {1, 2, 3, 4, 5},
-                {2, 1, 2, 3, 2, 4, 2, 5},
-                {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}
-        };
+    public int[] solution(int[] arr) {
+        int[] person1 = {1,2,3,4,5};
+        int[] person2 = {2,1,2,3,2,4,2,5};
+        int[] person3 = {3,3,1,1,2,2,4,4,5,5};
+        int person1Cnt = 0;
+        int person2Cnt = 0;
+        int person3Cnt = 0;
 
-        int[] hit = new int[3];
-        for(int i = 0; i < hit.length; i++) {
-            for(int j = 0; j < answers.length; j++) {
-                if(patterns[i][j % patterns[i].length] == answers[j]) hit[i]++;
-            }
+        for(int i = 0; i < arr.length; i++){
+            if(person1[i % person1.length] == arr[i]) person1Cnt++;
+            if(person2[i % person2.length] == arr[i]) person2Cnt++;
+            if(person3[i % person3.length] == arr[i]) person3Cnt++;
         }
 
-        int max = Math.max(hit[0], Math.max(hit[1], hit[2]));
-        List<Integer> list = new ArrayList<>();
-        for(int i = 0; i < hit.length; i++)
-            if(max == hit[i]) list.add(i + 1);
+        int maxVal = Math.max(person1Cnt, Math.max(person2Cnt, person3Cnt));
 
-        int[] answer = new int[list.size()];
-        int cnt = 0;
-        for(int num : list)
-            answer[cnt++] = num;
-        return answer;
+        ArrayList<Integer> list = new ArrayList<>();
+        if(person1Cnt == maxVal) list.add(1);
+        if(person2Cnt == maxVal) list.add(2);
+        if(person3Cnt == maxVal) list.add(3);
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
