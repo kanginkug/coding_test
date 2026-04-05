@@ -21,6 +21,10 @@ class Solution {
         if(person2Cnt == maxVal) list.add(2);
         if(person3Cnt == maxVal) list.add(3);
 
-        return list.stream().mapToInt(Integer::intValue).toArray();
+        int[] answer = new int[list.size()];
+        int cnt = 0;
+        for(int num : list)
+            answer[cnt++] = num;
+        return answer;
     }
 }
