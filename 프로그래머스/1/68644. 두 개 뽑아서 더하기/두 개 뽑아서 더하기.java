@@ -12,10 +12,8 @@ class Solution {
             }
         }
         int[] answer = new int[hashSet.size()];
-        Iterator<Integer> num = hashSet.iterator();
-        while(num.hasNext()){
-            answer[cnt] = num.next();
-            cnt++;
+        for (int num : hashSet) {
+            answer[cnt++] = num;
         }
         answer = Arrays.stream(answer).sorted().toArray();
         return answer;
