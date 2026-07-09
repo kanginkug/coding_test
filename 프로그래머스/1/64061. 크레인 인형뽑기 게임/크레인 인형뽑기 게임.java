@@ -1,25 +1,25 @@
-import java.util.*;
+import java.util.ArrayList;
 class Solution {
     public int solution(int[][] board, int[] moves) {
-        Stack<Integer> stack = new Stack<>();
-        int cnt = 0;
-
-        for(int y = 0; y < moves.length; y++){
-            for (int x = 0; x < board.length; x++){
-                int doll = 0;
-                doll = board[x][moves[y]-1];
-                if(doll != 0){
-                    board[x][moves[y]-1] = 0;
-                    if(!stack.isEmpty() && stack.peek().equals(doll)){
-                        stack.pop();
-                        cnt = cnt + 2;
-                    }else {
-                        stack.push(doll);
+        ArrayList list = new ArrayList();
+        int answer = 0;
+        for(int i = 0; i < moves.length; i++) {
+            for(int x = 0; x < board.length; x++) {
+                if(board[x][moves[i]-1] != 0) {
+                    list.add(board[x][moves[i]-1]);
+                    board[x][moves[i]-1] = 0;
+                    if(list.size() > 1) {
+                        if(list.get(list.size()-1) == list.get(list.size()-2)) {
+                            list.remove(list.size()-1);
+                            list.remove(list.size()-1);
+                            answer= answer +2;
+                        }
                     }
                     break;
                 }
+                
             }
         }
-        return cnt;
+        return answer;
     }
 }
