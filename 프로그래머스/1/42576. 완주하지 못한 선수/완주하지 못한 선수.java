@@ -1,23 +1,22 @@
 import java.util.HashMap;
 class Solution {
-    public static String solution(String[] participant, String[] completion) {
-        String answer = "";
-        HashMap<String, Integer> map = new HashMap();
-        for(String key : participant) {
-            map.put(key, map.getOrDefault(key, 0) + 1);
+    public String solution(String[] participant, String[] completion) {
+        HashMap<String, Integer> partiMap = new HashMap<>();
+        HashMap<String, Integer> compMap = new HashMap<>();
+        for(String parti : participant) {
+            partiMap.put(parti, partiMap.getOrDefault(parti, 0) +1);
         }
 
-        for(String key : completion) {
-            map.put(key, map.get(key) -1);
+        for(String comp : completion) {
+            compMap.put(comp, compMap.getOrDefault(comp, 0) +1);
         }
 
-        for(String key : map.keySet()) {
-            if(map.get(key) > 0) {
-                answer = key;
-                break;
+        String[] answer = new String[1];
+        for(String partiKey : partiMap.keySet()) {
+            if(compMap.get(partiKey) == null || !partiMap.get(partiKey).equals(compMap.get(partiKey))){
+                answer[0] = partiKey;
             }
         }
-        return answer;
-    
+        return answer[0];
     }
 }
