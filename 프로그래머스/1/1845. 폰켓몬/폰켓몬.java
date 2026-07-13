@@ -1,13 +1,17 @@
 import java.util.HashSet;
 class Solution {
     public int solution(int[] nums) {
+        int getNum = nums.length / 2;
+        int answer = 0;
         HashSet<Integer> hashSet = new HashSet<>();
-        for(int i : nums){
-            hashSet.add(i);
+        for(int num : nums) {
+            hashSet.add(num);
         }
-        int length = nums.length/2;
-        int hashSetLength = hashSet.toArray().length;
-        int answer = Math.min(length, hashSetLength);
+        if(hashSet.size() >= getNum) {
+            answer = getNum;
+        }else {
+            answer = hashSet.size();
+        }
         return answer;
     }
 }
