@@ -25,27 +25,21 @@ class Solution {
         maxList.sort((a,b) -> Integer.compare(b,a));
 
         while(!processQueue.isEmpty()) {
-            for(Process process : processQueue) {
-                int priority = process.priority;
-                if(maxList.get(0) == priority) {
-                    answerArr.add(process.num);
-                    maxList.remove(0);
-                    processQueue.poll();
-                } else {
-                    processQueue.poll();
-                    Process newProcess = new Process(process.num, process.priority);
-                    processQueue.offer(newProcess);
-                }
+            Process pollProcess = processQueue.poll();
+            if(maxList.get(0) == pollProcess.priority) {
+                answerArr.add(pollProcess.num);
+                maxList.remove(0);
+            } else {
+                processQueue.offer(pollProcess);
             }
         }
         int answer = 0;
         for(int i = 0; i < answerArr.size(); i++) {
             if(answerArr.get(i) == location) {
-                answer = i+1;
+                answer = i +1;
                 break;
             }
         }
-
         return answer;
     }
 }
