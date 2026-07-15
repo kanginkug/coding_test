@@ -15,8 +15,8 @@ class Solution {
 
     public int solution(int[] priorities, int location) {
         Queue<Process> processQueue = new ArrayDeque<>();
-        ArrayList<Integer> maxList = new ArrayList<>();
-        LinkedList<Integer> answerArr = new LinkedList<>();
+        LinkedList<Integer> maxList = new LinkedList<>();
+        ArrayList<Integer> answerArr = new ArrayList<>();
         for(int i = 0; i < priorities.length; i++) {
             maxList.add(priorities[i]);
             Process process = new Process(i, priorities[i]);
