@@ -1,45 +1,43 @@
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 class Solution {
-    class Process {
-        int num;
-        int priority;
-
-        public Process(int num, int priority) {
-            this.num = num;
+    class Stage{
+        int priority = 0;
+        int location = 0;
+        public Stage(int priority, int location) {
             this.priority = priority;
+            this.location = location;
         }
     }
-
     public int solution(int[] priorities, int location) {
-        Queue<Process> processQueue = new ArrayDeque<>();
+        LinkedList<Stage> list = new LinkedList<>();
         LinkedList<Integer> maxList = new LinkedList<>();
-        ArrayList<Integer> answerArr = new ArrayList<>();
+        ArrayList<Integer> answerList = new ArrayList<>();
+        Queue<Integer> queue = new ArrayDeque<>();
         for(int i = 0; i < priorities.length; i++) {
-            maxList.add(priorities[i]);
-            Process process = new Process(i, priorities[i]);
-            processQueue.offer(process);
+            Stage stage = new Stage(priorities[i], i);
+            list.addLast(stage);
+            maxList.addLast(priorities[i]);
+            queue.offer(priorities[i]);
         }
         maxList.sort((a,b) -> Integer.compare(b,a));
-
-        while(!processQueue.isEmpty()) {
-            Process pollProcess = processQueue.poll();
-            if(maxList.get(0) == pollProcess.priority) {
-                answerArr.add(pollProcess.num);
-                maxList.remove(0);
-            } else {
-                processQueue.offer(pollProcess);
+        while(!queue.isEmpty()){
+            int poll = queue.poll();
+            Stage first = list.getFirst();
+            list.removeFirst();
+            if(maxList.get(0) > poll) {
+                list.addLast(first);
+                queue.offer(poll);
+            } else if(maxList.get(0) == poll){
+                answerList.add(first.location);
+                maxList.removeFirst();
             }
         }
-        int answer = 0;
-        for(int i = 0; i < answerArr.size(); i++) {
-            if(answerArr.get(i) == location) {
-                answer = i +1;
-                break;
+        for(int i = 0; i < answerList.size(); i++) {
+            if(location == answerList.get(i)) {
+                System.out.println(i+1);
+                return i+1;
             }
         }
-        return answer;
+        return 0;
     }
 }
