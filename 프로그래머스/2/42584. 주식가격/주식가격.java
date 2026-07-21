@@ -1,15 +1,33 @@
+import java.util.*;
 class Solution {
     public int[] solution(int[] prices) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        int max = 0;
+        for(int price : prices) {
+            if(price > max) {
+                max = price;
+            }
+            queue.offer(price);
+        }
         int[] answer = new int[prices.length];
-        for(int i = 0; i < prices.length; i++) {
-            int cnt = 0;
-            for(int x = i + 1; x < prices.length; x++) {
+        if(max == 0) {
+            for(int i = 0; i < prices.length; i++) {
+                answer[i] = 0;
+            }
+            return answer;
+        }
+        int inx = 0;
+        while (!queue.isEmpty()) {
+            int poll = queue.poll();
+            int cnt = -1;
+            for(int i = inx; i < prices.length; i++) {
                 cnt++;
-                if(prices[i] > prices[x]){
+                if(poll > prices[i]) {
                     break;
                 }
             }
-            answer[i] = cnt;
+            answer[inx] = cnt;
+            inx++;
         }
         return answer;
     }
