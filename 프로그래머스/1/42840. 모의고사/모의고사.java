@@ -1,57 +1,30 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 class Solution {
-    class Student {
-        int cnt;
-        int name;
-
-        public Student(int cnt, int name) {
-            this.cnt = cnt;
-            this.name = name;
-        }
-    }
     public int[] solution(int[] answers) {
-        ArrayList<Student> answerList = new ArrayList<>();
-        int[] one = {1, 2, 3, 4, 5};
-        int[] two = {2, 1, 2, 3, 2, 4, 2, 5};
-        int[] three = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
-        int oneAns = 0;
-        int twoAns = 0;
-        int threeAns = 0;
-
+        int[] person1 = {1, 2, 3, 4, 5};
+        int[] person2 = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] person3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+        int[] nums = new int[3];
         for(int i = 0; i < answers.length; i++) {
-            if (answers[i] == one[i % 5]) {
-                oneAns++;
-            } if (answers[i] == two[i % 8]) {
-                twoAns++;
-            } if (answers[i] == three[i % 10]) {
-                threeAns++;
+            if(answers[i] == person1[i%person1.length]) {
+                nums[0] = nums[0]+1;
+            }
+            if(answers[i] == person2[i%person2.length]) {
+                nums[1] = nums[1]+1;
+            }
+            if(answers[i] == person3[i%person3.length]) {
+                nums[2] = nums[2]+1;
             }
         }
-
-        Student oneStu = new Student(oneAns, 1);
-        Student twoStu = new Student(twoAns, 2);
-        Student threeStu = new Student(threeAns, 3);
-        answerList.add(oneStu);
-        answerList.add(twoStu);
-        answerList.add(threeStu);
-        answerList.sort((a,b) -> Integer.compare(b.cnt, a.cnt));
-
-        ArrayList<Integer> list = new ArrayList<>();
-        if(answerList.get(0).cnt > answerList.get(1).cnt) {
-            list.add(answerList.get(0).name);
-        } else if(answerList.get(0).cnt == answerList.get(1).cnt && answerList.get(1).cnt > answerList.get(2).cnt) {
-            list.add(answerList.get(0).name);
-            list.add(answerList.get(1).name);
-        } else if(answerList.get(0).cnt == answerList.get(1).cnt && answerList.get(1).cnt == answerList.get(2).cnt) {
-            list.add(answerList.get(0).name);
-            list.add(answerList.get(1).name);
-            list.add(answerList.get(2).name);
-        }
-
-        int[] answer = new int[list.size()];
-        for(int i = 0; i < list.size(); i++) {
-            answer[i] = list.get(i);
+        int max = Math.max(nums[0], Math.max(nums[1],nums[2]));
+        ArrayList<Integer> arr = new ArrayList<>();
+        if(nums[0] == max) arr.add(1);
+        if(nums[1] == max) arr.add(2);
+        if(nums[2] == max) arr.add(3);
+        int[] answer = new int[arr.size()];
+        for(int i = 0; i < arr.size(); i++) {
+            answer[i] = arr.get(i);
         }
         return answer;
     }
