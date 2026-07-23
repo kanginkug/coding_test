@@ -1,42 +1,22 @@
-import java.util.HashSet;
 class Solution {
-    HashSet<String> strSet = new HashSet<>();
-    //80	{{80,20},{50,40},{30,10}}	3
+    int maxCnt = 0;
+    boolean[] booArr;
     public int solution(int k, int[][] dungeons) {
-        String strNum = "";
-        int length = dungeons.length;
-        for(int i = 0; i < dungeons.length; i++) {
-            strNum += String.valueOf(i);
-        }
-        Recursion("", strNum, length);
-        int max = 0;
-        for(String idx : strSet) {
-            int cnt = 0;
-            int heart = k;
-            for(int i = 0; i < idx.length(); i++) {
-                int index = Integer.parseInt(String.valueOf(idx.charAt(i)));
-                if(dungeons[index][0] <= heart) {
-                    heart = heart - dungeons[index][1];
-                    cnt++;
-                } else {
-                    break;
-                }
-            }
-            if(max < cnt) {
-                max = cnt;
-            }
-        }
-
-        return max;
+        booArr = new boolean[dungeons.length];
+        DFS(k, 0, dungeons, booArr);
+        return maxCnt;
     }
-
-    public void Recursion(String comp, String other, int length) {
-        if(comp.length() == length) {
-            strSet.add(comp);
-        }
-        for(int i = 0; i < other.length(); i++) {
-            Recursion(comp + other.charAt(i), other.substring(0,i) + other.substring(i + 1), length);
+    public void DFS(int k, int cnt, int[][] dungenos, boolean[] booArr) {
+        if(maxCnt < cnt) {
+            maxCnt = cnt;
         }
 
+        for(int i = 0; i < dungenos.length; i++) {
+            if(!booArr[i] && k >= dungenos[i][0] && k - dungenos[i][1] >= 0) {
+                booArr[i] = true;
+                DFS(k - dungenos[i][1], cnt+1, dungenos, booArr);
+                booArr[i] = false;
+            }
+        }
     }
 }
