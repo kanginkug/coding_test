@@ -1,20 +1,20 @@
 class Solution {
     public int solution(int n, int[][] computers) {
-        boolean[] visited = new boolean[n];
         int answer = 0;
-        for(int i = 0; i < computers.length; i++) {
+        boolean[] visited = new boolean[n];
+        for(int i = 0; i < n; i++) {
             if(!visited[i]) {
-                DFS(visited, computers, i);
+                DFS(i, computers, visited);
                 answer++;
             }
         }
         return answer;
     }
-    public void DFS(boolean[] visited, int[][] computers, int inx) {
-        for (int i = 0; i < computers.length; i++) {
-            if(!visited[i] && computers[inx][i] == 1) {
-                visited[i] = true;
-                DFS(visited, computers, i);
+    public void DFS(int i, int[][] computers, boolean[] visited) {
+        for(int x = 0; x < computers.length; x++) {
+            if(!visited[x] && computers[i][x] == 1) {
+                visited[x] = true;
+                DFS(x, computers, visited);
             }
         }
     }
