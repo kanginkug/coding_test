@@ -1,36 +1,38 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
         Arrays.sort(lost);
         Arrays.sort(reserve);
-        HashSet<Integer> hashSet = new HashSet<>();
-        for(int num : reserve) {
-            hashSet.add(num);
-        }
-        List<Integer> realLost = new ArrayList<>();
         for(int i = 0; i < lost.length; i++) {
-            if(hashSet.contains(lost[i])) {
-                hashSet.remove(lost[i]);
-            } else {
-                realLost.add(lost[i]);
+            for(int x = 0; x < reserve.length; x++) {
+                if(lost[i] != 0 && reserve[x] != 0) {
+                    if(lost[i] == reserve[x]) {
+                        lost[i] = 0;
+                        reserve[x] = 0;
+                    }
+                }
             }
         }
-        int renderCount = 0;
-        for(int i = 0; i < realLost.size(); i++) {
 
-               if(hashSet.contains(realLost.get(i) -1)) {
-                   renderCount++;
-                   hashSet.remove(realLost.get(i)-1);
-               }
-               else if(hashSet.contains(realLost.get(i) + 1)) {
-                   renderCount++;
-                   hashSet.remove(realLost.get(i)+1);
-               }
+        for(int i = 0; i < lost.length; i++) {
+            for(int x = 0; x < reserve.length; x++) {
+                if(lost[i] != 0 && reserve[x] != 0) {
+                    if(lost[i] == reserve[x]-1) {
+                        lost[i] = 0;
+                        reserve[x] = 0;
+                    } else if(lost[i] == reserve[x]+1) {
+                        lost[i] = 0;
+                        reserve[x] = 0;
+                    }
+                }
+            }
         }
-
-        return n - (realLost.size() - renderCount);
+        int cnt = 0;
+        for(int num : lost) {
+            if(num != 0) {
+                cnt++;
+            }
+        }
+        return n-cnt;
     }
 }
