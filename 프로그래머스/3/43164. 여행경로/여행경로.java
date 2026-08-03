@@ -1,45 +1,30 @@
 import java.util.Arrays;
 class Solution {
     String answerStr = "";
-    String[] answer;
     public String[] solution(String[][] tickets) {
-         Arrays.sort(tickets,(a,b) -> {
-            if(a[0].equals(b[0]))
-                return a[1].compareTo(b[1]);
+        Arrays.sort(tickets,(a,b) -> {
+            if(a[0].equals(b[0])) return a[1].compareTo(b[1]);
             return a[0].compareTo(b[0]);
-        }
-        );
-        for(int i = 0; i < tickets.length; i++) {
-            boolean[] visited = new boolean[tickets.length];
-            String[] strArr;
-            if(tickets[i][0].equals("ICN")) {
-                visited[i] = true;
-                DFS(1, visited, tickets[i][1], tickets[i][0] + " " + tickets[i][1], tickets);
-                strArr = answerStr.split(" ");
-                if(strArr.length == tickets.length + 1) {
-                    answer = strArr;
-                    return answer;
-                }
-            }
-        }
-
-        return answer;
+        });
+        boolean[] visited = new boolean[tickets.length];
+        int depth = 0;
+        DFS(depth, tickets, visited, "ICN", "ICN");
+        System.out.println(answerStr);
+        return answerStr.split(" ");
     }
-    
-    public void DFS(int depth, boolean[] visited, String backStr, String sumStr, String[][] tickets) {
+    public void DFS(int depth, String[][] tickets, boolean[] visited, String startStr, String sumStr) {
         if(depth == tickets.length) {
             answerStr = sumStr;
             return;
         }
-        for(int i = 0; i < tickets.length; i++) {
-            if(!visited[i] && backStr.equals(tickets[i][0])) {
-                visited[i] = true;
-                DFS(depth + 1, visited, tickets[i][1], sumStr + " " + tickets[i][1], tickets);
-                visited[i] = false;
-            } else if (!answerStr.isEmpty()) {
-                return;
+        if(answerStr.isEmpty()) {
+            for(int i = 0; i < tickets.length; i++) {
+                if(tickets[i][0].equals(startStr) && !visited[i]) {
+                    visited[i] = true;
+                    DFS(depth + 1, tickets, visited, tickets[i][1], sumStr + " " + tickets[i][1]);
+                    visited[i] = false;
+                }
             }
         }
-
     }
 }
