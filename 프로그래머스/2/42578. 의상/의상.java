@@ -1,20 +1,14 @@
 import java.util.HashMap;
 class Solution {
     public int solution(String[][] clothes) {
-        HashMap<String,Integer> hashMap = new HashMap<>();
+        HashMap<String, Integer> hashMap = new HashMap<>();
         for(int i = 0; i < clothes.length; i++) {
-            hashMap.put(clothes[i][1],hashMap.getOrDefault(clothes[i][1],0)+1);
-        }
-        int[] clothArr = new int[hashMap.size()];
-        int inx = 0;
-        for(String name : hashMap.keySet()) {
-            clothArr[inx] = hashMap.get(name);
-            inx++;
+            hashMap.put(clothes[i][1], hashMap.getOrDefault(clothes[i][1],0) +1);
         }
         int answer = 1;
-        for (int cnt : clothArr) {
-            answer *= (cnt + 1);
+        for(String key : hashMap.keySet()) {
+            answer *= (hashMap.get(key) + 1);
         }
-        return answer - 1;
+        return answer-1;
     }
 }
