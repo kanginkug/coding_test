@@ -1,35 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
 class Solution {
     public int solution(int n, int k) {
         int answer = 0;
-        StringBuilder other = new StringBuilder();
-        while(n >= k) {
-            other.insert(0, String.valueOf(n % k));
+        StringBuilder sb = new StringBuilder();
+        while(n>=k) {
+            sb.insert(0,n%k);
             n = n/k;
         }
-        if(n>0) {
-            other.insert(0, String.valueOf(n));
-        }
+        sb.insert(0,n);
 
-        StringBuilder num = new StringBuilder();
-        for(int i = 0; i < other.length(); i++) {
-            if(other.charAt(i) != '0') {
-                num.append(String.valueOf(other.charAt(i)));
+        String[] strArr = sb.toString().split("0");
+
+        for(int i = 0; i < strArr.length; i++) {
+            if(strArr[i].isEmpty()) {
+                continue;
             }
-            if((!num.isEmpty()) && (other.charAt(i) == '0' || i == other.length()-1)){
-                long iNum = Long.parseLong(num.toString());
-                if(iNum > 1) {
-                    boolean privateNum = false;
-                    for(long x = 2; x * x <= iNum; x++) {
-                        if(iNum%x == 0) {
-                            privateNum = true;
-                            break;
-                        }
-                    }
-                    if(!privateNum) {
-                        answer++;
+            long num = Long.parseLong(strArr[i]);
+            if(num > 1) {
+                boolean pass = false;
+                for(long x = 2; (long)x * x <= num; x++) {
+                    if(num % x == 0) {
+                        pass = true;
+                        break;
                     }
                 }
-                num = new StringBuilder();
+                if(!pass) {
+                    answer++;
+                }
             }
         }
 
